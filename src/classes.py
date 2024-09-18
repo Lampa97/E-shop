@@ -19,11 +19,11 @@ class Product:
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         elif new_price < self.__price:
-            choice = input(f'Введите "y" чтобы подтвердить снижение цены. Старая цена: {self.__price} -> Новая цена: {new_price}\n')
-            if choice == 'y':
+            choice = input(
+                f'Введите "y" чтобы подтвердить снижение цены. Старая цена: {self.__price}->Новая цена: {new_price}\n'
+            )
+            if choice == "y":
                 self.__price = float(new_price)
-            else:
-                pass
         else:
             self.__price = float(new_price)
 
@@ -49,7 +49,6 @@ class Category:
 
     def add_product(self, product: Product):
         self.__products.append(product)
-
 
     @property
     def products(self):
