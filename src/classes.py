@@ -44,7 +44,7 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products
-        self.category_count += 1
+        Category.category_count += 1
         self.product_count += len(products)
 
     def add_product(self, product: Product):
