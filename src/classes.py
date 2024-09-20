@@ -44,12 +44,12 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products
-        Category.category_count += 1
-        Category.product_count += len(products)
+        self.category_count += 1
+        self.product_count += len(products)
 
     def add_product(self, product: Product):
         self.__products.append(product)
-        Category.product_count += 1
+        self.product_count += 1
 
     @property
     def products(self):
