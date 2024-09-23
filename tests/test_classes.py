@@ -13,18 +13,18 @@ def test_create_categories(product_1, product_2, product_3):
     tv_products = Category("TV_Products", "Premium class", [product_1, product_2])
     assert tv_products.name == "TV_Products"
     assert tv_products.description == "Premium class"
-    assert Category.product_count == 2
+    assert tv_products.product_count == 2
     assert Category.category_count == 1
     washing_machines = Category("Washing machines", "Очищает даже самые грязные пятна", [product_3])
     assert washing_machines.name == "Washing machines"
     assert washing_machines.description == "Очищает даже самые грязные пятна"
     assert Category.category_count == 2
-    assert Category.product_count == 3
+    assert washing_machines.product_count == 1
 
 def test_add_products(product_4, product_5):
     test_products = Category("Test_Prods", "Test_description", [product_4])
     test_products.add_product(product_5)
-    assert Category.product_count == 5
+    assert test_products.product_count == 2
 
 
 
