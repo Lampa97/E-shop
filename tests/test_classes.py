@@ -83,6 +83,7 @@ def test_add_different_products(product_smartphone_2, product_lawn_grass_2):
     with pytest.raises(TypeError):
         assert product_smartphone_2 + product_lawn_grass_2
 
-def test_add_not_product():
+def test_add_not_product(product_1, product_2):
+    tv_products_2 = Category("TV", "Premium class", [product_1, product_2])
     with pytest.raises(TypeError):
-        assert Category.add_product('Wrong Product')
+        assert tv_products_2.add_product('Wrong Product')
