@@ -1,4 +1,5 @@
 import pytest
+
 from src.classes import Category, Product
 
 
@@ -75,15 +76,18 @@ def test_str_category(product_1, product_2):
     tv_products = Category("TV", "Premium class", [product_1, product_2])
     assert str(tv_products) == "TV, количество продуктов: 5 шт."
 
+
 def test_add_same_product(product_smartphone, product_smartphone_2, product_lawn_grass, product_lawn_grass_2):
     assert product_smartphone + product_smartphone_2 == 75000.0
     assert product_lawn_grass + product_lawn_grass_2 == 7000.0
+
 
 def test_add_different_products(product_smartphone_2, product_lawn_grass_2):
     with pytest.raises(TypeError):
         assert product_smartphone_2 + product_lawn_grass_2
 
+
 def test_add_not_product(product_1, product_2):
     tv_products_2 = Category("TV", "Premium class", [product_1, product_2])
     with pytest.raises(TypeError):
-        assert tv_products_2.add_product('Wrong Product')
+        assert tv_products_2.add_product("Wrong Product")

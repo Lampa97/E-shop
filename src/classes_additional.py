@@ -4,6 +4,7 @@ from src.classes import Category
 class CategoryIterator:
     """Класс принимающий на вход объект класса Category и возвращает итератор
     с именами товаров из этой категории"""
+
     category_obj: Category
 
     def __init__(self, category_obj):
