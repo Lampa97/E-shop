@@ -1,6 +1,7 @@
 import pytest
 
 from src.classes import Product
+from src.subclasses import Smartphone, LawnGrass
 
 
 @pytest.fixture
@@ -26,6 +27,23 @@ def product_4():
 @pytest.fixture
 def product_5():
     return Product("Test_Prod_2", "10 различных программ", 20000.0, 4)
+
+@pytest.fixture
+def product_smartphone():
+    return Smartphone("Siemens", "Тонкий корпус", 5000.0, 3, 10000, 'E200', 16, 'Purple')
+
+@pytest.fixture
+def product_smartphone_2():
+    return Smartphone("Xiaomi Redmi Note 11", "1024GB, Синий", 30000.0, 2, 90.3, "Note 11", 1024, "Синий")
+
+@pytest.fixture
+def product_lawn_grass():
+    return LawnGrass("Газонная трава", "Экономный вариант", 100.0, 10, "Голландия", "5 дней", "Изумрудный")
+
+@pytest.fixture
+def product_lawn_grass_2():
+    return LawnGrass("Газонная трава 2", "Выносливая трава", 300.0, 20, "США", "5 дней", "Темно-зеленый")
+
 
 
 @pytest.fixture
