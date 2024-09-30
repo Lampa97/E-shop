@@ -17,9 +17,11 @@ def product_2():
 def product_3():
     return Product("Bosh", "10 различных программ", 20000.0, 4)
 
+
 @pytest.fixture
 def product_4():
     return Product("Test_Prod_1", "10 различных программ", 20000.0, 4)
+
 
 @pytest.fixture
 def product_5():
