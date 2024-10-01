@@ -52,8 +52,8 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products
-        Category.category_count += 1
-        Category.product_count += len(products)
+        self.__class__.category_count += 1
+        self.__class__.product_count += len(products)
 
     def __str__(self):
         return f"{self.name}, количество продуктов: {sum(x.quantity for x in self.__products)} шт."
@@ -64,7 +64,7 @@ class Category:
     def add_product(self, product: Product):
         if isinstance(product, Product):
             self.__products.append(product)
-            self.product_count += 1
+            self.__class__.product_count += 1
         else:
             raise TypeError
 
