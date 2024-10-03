@@ -99,14 +99,13 @@ def test_mixinprint(capsys):
     assert log_message.out.strip() == "Product(test_name, test_description, 100, 2)"
 
 
-def test_create_class_error():
+def test_abstract_class_inheritance_error():
+    class TestProduct(BaseProduct):
+
+        def __init__(self):
+            pass
+
     with pytest.raises(TypeError):
-
-        class TestProduct(BaseProduct):
-
-            def __init__(self):
-                pass
-
         TestProduct()
 
 
@@ -118,11 +117,9 @@ def test_create_order_object(product_1):
     assert product_1.quantity == 2
 
 
-def test_create_order_failed(product_1, capsys):
+def test_create_order_failed(product_1):
     with pytest.raises(ValueError):
         Order(product_1, 4)
-        message = capsys.readouterr()
-        assert message == "Превышен лимит товара на складе. Текущее количество LG: 3"
 
 
 def test_print_order(product_1):
@@ -130,7 +127,7 @@ def test_print_order(product_1):
     assert str(test_order) == "В заказе: LG - количество: 1"
 
 
-def test_add_product_to_order(product_1, capsys):
+def test_add_product_to_order(product_1):
     test_order = Order(product_1, 2)
     test_order.add_product(product_1)
     assert test_order.quantity == 3
@@ -138,13 +135,9 @@ def test_add_product_to_order(product_1, capsys):
     assert product_1.quantity == 0
     with pytest.raises(ValueError):
         test_order.add_product(product_1)
-        message = capsys.readouterr()
-        assert message.out == "Товар закончился"
 
 
-def test_add_product_to_order_failed(product_1, product_2, capsys):
+def test_add_product_to_order_failed(product_1, product_2):
     test_order = Order(product_1, 2)
     with pytest.raises(TypeError):
         test_order.add_product(product_2)
-        message = capsys.readouterr()
-        assert message == "Нельзя складывать разные товары"
