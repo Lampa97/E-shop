@@ -1,4 +1,30 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class BaseProduct(ABC):
+
+    @classmethod
+    @abstractmethod
+    def new_product(cls, params):
+        pass
+
+class ProductGroup(ABC):
+
+    @abstractmethod
+    def add_product(self, product):
+        pass
+
+class MixinPrint:
+
+    def __init__(self):
+        print(repr(self))
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
+
+
+
+class Product(MixinPrint, BaseProduct):
     name: str
     description: str
     price: float
@@ -9,6 +35,7 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
@@ -40,7 +67,7 @@ class Product:
         return cls(**params)
 
 
-class Category:
+class Category(ProductGroup):
     name: str
     description: str
     products: list
@@ -78,3 +105,5 @@ class Category:
         for product in self.__products:
             product_list_string += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return product_list_string
+
+
