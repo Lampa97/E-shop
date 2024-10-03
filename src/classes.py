@@ -8,11 +8,13 @@ class BaseProduct(ABC):
     def new_product(cls, params):
         pass
 
+
 class ProductGroup(ABC):
 
     @abstractmethod
     def add_product(self, product):
         pass
+
 
 class MixinPrint:
 
@@ -21,7 +23,6 @@ class MixinPrint:
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
-
 
 
 class Product(MixinPrint, BaseProduct):
@@ -121,7 +122,7 @@ class Order(ProductGroup):
         product.quantity -= self.quantity
 
     def __str__(self):
-        return f'В заказе: {self.product.name} - количество: {self.quantity}'
+        return f"В заказе: {self.product.name} - количество: {self.quantity}"
 
     def add_product(self, add_product: Product):
         if add_product.quantity < 1:
@@ -131,4 +132,4 @@ class Order(ProductGroup):
             self.price += add_product.price
             add_product.quantity -= 1
         else:
-            raise TypeError('Нельзя складывать разные товары')
+            raise TypeError("Нельзя складывать разные товары")
