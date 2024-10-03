@@ -125,7 +125,7 @@ class Order(ProductGroup):
 
     def add_product(self, add_product: Product):
         if add_product.quantity < 1:
-            raise ValueError("Товара нет в наличии")
+            raise ValueError("Товар закончился")
         if self.product.name == add_product.name and self.product.description == add_product.description:
             self.quantity += 1
             self.price += add_product.price

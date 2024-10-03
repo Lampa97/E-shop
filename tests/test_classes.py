@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Category, Product
+from src.classes import Category, Product, BaseProduct, Order
 
 
 def test_create_product(product_1):
@@ -37,7 +37,7 @@ def test_set_price(product_1):
 def test_set_price_negative(capsys, product_1):
     product_1.price = -100
     message = capsys.readouterr()
-    assert message.out.strip() == "Цена не должна быть нулевая или отрицательная"
+    assert message.out.split('\n')[-2] == "Цена не должна быть нулевая или отрицательная"
 
 
 def test_new_product(product_1):
@@ -91,3 +91,51 @@ def test_add_not_product(product_1, product_2):
     tv_products_2 = Category("TV", "Premium class", [product_1, product_2])
     with pytest.raises(TypeError):
         assert tv_products_2.add_product("Wrong Product")
+
+def test_mixinprint(capsys):
+    test_product = Product('test_name', 'test_description', 100, 2)
+    log_message = capsys.readouterr()
+    assert log_message.out.strip() == 'Product(test_name, test_description, 100, 2)'
+
+def test_create_class_error():
+    with pytest.raises(TypeError):
+        class TestProduct(BaseProduct):
+
+            def __init__(self):
+                pass
+        test_prod = TestProduct()
+
+def test_create_order_object(product_1):
+    test_order = Order(product_1, 1)
+    assert test_order.product == product_1
+    assert test_order.quantity == 1
+    assert test_order.price == 70000.0
+    assert product_1.quantity == 2
+
+def test_create_order_failed(product_1, capsys):
+    with pytest.raises(ValueError):
+        test_order = Order(product_1, 4)
+        message = capsys.readouterr()
+        assert message == "Превышен лимит товара на складе. Текущее количество LG: 3"
+
+def test_print_order(product_1):
+    test_order = Order(product_1, 1)
+    assert str(test_order) == 'В заказе: LG - количество: 1'
+
+def test_add_product_to_order(product_1, capsys):
+    test_order = Order(product_1, 2)
+    test_order.add_product(product_1)
+    assert test_order.quantity == 3
+    assert test_order.price == 210000.0
+    assert product_1.quantity == 0
+    with pytest.raises(ValueError):
+        test_order.add_product(product_1)
+        message = capsys.readouterr()
+        assert message.out == 'Товар закончился'
+
+def test_add_product_to_order_failed(product_1, product_2, capsys):
+    test_order = Order(product_1, 2)
+    with pytest.raises(TypeError):
+        test_order.add_product(product_2)
+        message = capsys.readouterr()
+        assert message == 'Нельзя складывать разные товары'
