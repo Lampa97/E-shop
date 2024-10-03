@@ -107,3 +107,28 @@ class Category(ProductGroup):
         return product_list_string
 
 
+class Order(ProductGroup):
+
+    product: Product
+    quantity: int
+
+    def __init__(self, product, quantity):
+        if quantity > product.quantity:
+            raise ValueError(f"Превышен лимит товара на складе. Текущее количество {product.name}: {product.quantity}")
+        self.product = product
+        self.quantity = quantity
+        self.price = product.price * self.quantity
+        product.quantity -= self.quantity
+
+    def __str__(self):
+        return f'В заказе: {self.product.name} - количество: {self.quantity}'
+
+    def add_product(self, add_product: Product):
+        if add_product.quantity < 1:
+            raise ValueError("Товара нет в наличии")
+        if self.product.name == add_product.name and self.product.description == add_product.description:
+            self.quantity += 1
+            self.price += add_product.price
+            add_product.quantity -= 1
+        else:
+            raise TypeError('Нельзя складывать разные товары')
