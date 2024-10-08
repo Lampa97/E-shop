@@ -32,6 +32,8 @@ class Product(MixinPrint, BaseProduct):
     quantity: int
 
     def __init__(self, name, description, price, quantity):
+        if quantity < 1:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.__price = price
@@ -88,6 +90,12 @@ class Category(ProductGroup):
 
     def __len__(self):
         return len(self.__products)
+
+    def middle_price(self):
+        try:
+            return round(sum(x.price for x in self.__products) / len(self), 2)
+        except ZeroDivisionError:
+            return 0
 
     def add_product(self, product: Product):
         if isinstance(product, Product):
